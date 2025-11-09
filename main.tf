@@ -26,7 +26,7 @@ module "eks" {
       desired_size = 2
 
     },
-    monitoring = {
+    tools = {
       instance_types = ["m6i.large"]
       ami_type       = "AL2023_x86_64_STANDARD"
 
@@ -34,7 +34,7 @@ module "eks" {
       max_size     = 5
       desired_size = 2
       taint = {
-        key    = "monitoring"
+        key    = "tools"
         value  = "true"
         effect = "NO_SCHEDULE"
       }
@@ -71,4 +71,10 @@ module "vpc" {
   }
 
   tags = local.tags
+}
+
+module "nginx" {
+  source = "./nginx"
+
+  nginx_install = true
 }
