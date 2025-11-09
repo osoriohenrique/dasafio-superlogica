@@ -1,19 +1,15 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.8.0"
+  version = "20.37.2"
 
-  name = local.name
-  kubernetes_version = "1.33"
+  cluster_name    = local.name
+  cluster_version = "1.33"
 
-  addons = {
-    coredns = {}
-    eks-pod-identity-agent = {
-      before_compute = true
-    }
-    kube-proxy = {}
-    vpc-cni = {
-      before_compute = true
-    }
+  cluster_addons = {
+    coredns                = {}
+    eks-pod-identity-agent = {}
+    kube-proxy             = {}
+    vpc-cni                = {}
   }
 
   vpc_id     = module.vpc.vpc_id
@@ -28,18 +24,18 @@ module "eks" {
       max_size = 5
 
       desired_size = 2
-      
+
     },
     monitoring = {
       instance_types = ["m6i.large"]
       ami_type       = "AL2023_x86_64_STANDARD"
 
-      min_size = 2
-      max_size = 5
+      min_size     = 2
+      max_size     = 5
       desired_size = 2
       taint = {
-        key = "monitoring"
-        value = "true"
+        key    = "monitoring"
+        value  = "true"
         effect = "NO_SCHEDULE"
       }
     }
@@ -47,13 +43,13 @@ module "eks" {
 
   tags = local.tags
 
-  depends_on = [ module.vpc ]
+  depends_on = [module.vpc]
 }
 
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 6.0"
+  version = "~> 5.0"
 
   name = local.name
   cidr = local.vpc_cidr
