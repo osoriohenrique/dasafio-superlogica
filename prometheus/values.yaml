@@ -1,0 +1,120 @@
+crds:
+  upgradeJob:
+    tolerations:
+    - key: "tools"
+      operator: "Equal"
+      effect: "NoSchedule"
+      value: "true"
+
+
+alertmanager:
+  alertmanagerSpec:
+    tolerations:
+    - key: "tools"
+      operator: "Equal"
+      effect: "NoSchedule"
+      value: "true"
+
+prometheusOperator:
+  tolerations:
+  - key: "tools"
+    operator: "Equal"
+    effect: "NoSchedule"
+    value: "true"
+
+  admissionWebhooks:
+    deployment:
+      tolerations: 
+      - key: "tools"
+        operator: "Equal"
+        effect: "NoSchedule"
+        value: "true"
+
+  patch:
+    tolerations:
+    - key: "tools"
+      operator: "Equal"
+      effect: "NoSchedule"
+      value: "true"
+
+prometheus: 
+  prometheusSpec:
+    tolerations:
+    - key: "tools"
+      operator: "Equal"
+      effect: "NoSchedule"
+      value: "true"
+
+grafana:
+  ingress:
+    enabled: true
+  tolerations:
+  - key: "tools"
+    operator: "Equal"
+    effect: "NoSchedule"
+    value: "true"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "tools"
+            operator: "Equal"
+            value: "true"
+            effect: "NoSchedule"
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - grafana
+            - key: app.kubernetes.io/instance
+              operator: In
+              values:
+              - grafana
+            - key: app.kubernetes.io/component
+              operator: In
+              values:
+              - grafana
+          topologyKey: kubernetes.io/hostname
+
+kube-state-metrics:
+  tolerations:
+  - key: "tools"
+    operator: "Equal"
+    effect: "NoSchedule"
+    value: "true"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "tools"
+            operator: "Equal"
+            value: "true"
+            effect: "NoSchedule"
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - kube-state-metrics
+            - key: app.kubernetes.io/instance
+              operator: In
+              values:
+              - kube-state-metrics 
+            - key: app.kubernetes.io/component
+              operator: In
+              values:
+              - kube-state-metrics
+          topologyKey: kubernetes.io/hostname
+
+

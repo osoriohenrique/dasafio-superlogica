@@ -7,7 +7,7 @@ resource "helm_release" "nginx" {
   version = "4.14.0"
   namespace = "ingress-nginx"
   values = [
-    "${file("values/nginx.values.yaml")}"
+    "${file("values.yaml")}"
   ]
   
 }
