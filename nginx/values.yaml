@@ -10,9 +10,9 @@ controller:
         nodeSelectorTerms:
         - matchExpressions:
           - key: "tools"
-            operator: "Equal"
-            value: "true"
-            effect: "NoSchedule"
+            operator: "In"
+            values: 
+            - "true"
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 100
@@ -46,16 +46,16 @@ controller:
     - key: "tools"
       operator: "Equal"
       effect: "NoSchedule"
-      value: "true"
+      values: "true"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
           - matchExpressions:
             - key: "tools"
-              operator: "Equal"
-              value: "true"
-              effect: "NoSchedule"
+              operator: "In"
+              value: 
+              - "true"
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 100
